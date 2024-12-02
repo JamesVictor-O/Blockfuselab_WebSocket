@@ -12,7 +12,7 @@ const webSocketSlice=createSlice({
         setMessages: (state, action) => {
             state.messages = action.payload;
           },
-          // Action to add a single message to the list
+  
           addMessage: (state, action) => {
             state.messages.push(action.payload);
           },
