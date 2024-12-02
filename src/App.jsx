@@ -1,34 +1,45 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useDispatch, useSelector } from 'react-redux';
+import io from 'socket.io-client';
+import { setMessages, addMessage } from './redux/messagesSlice';
 
+const socket = io('ws://localhost:3000');
 function App() {
-  const [count, setCount] = useState(0)
+  const dispatch = useDispatch();
+  const messages = useSelector((state) => state.messages.messages);
+
+
+  useEffect(() => {
+
+    socket.on('action1', (message) => {
+      dispatch(addMessage(message));
+    });
+
+    socket.on('action2', (message) => {
+      dispatch(addMessage(message));
+    });
+
+    socket.on('action3', (message) => {
+      dispatch(addMessage(message));
+    });
+
+    socket.on('acton4', (message) => {
+      dispatch(addMessage(message));
+    });
+
+    socket.on('action5', (message) => {
+      dispatch(addMessage(message));
+    });
+
+   
+  }, [dispatch]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      {messages.map(message => 
+        <div>{message}</div>
+      )}
+    </div>
   )
 }
 
